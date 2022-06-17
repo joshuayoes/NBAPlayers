@@ -44,13 +44,14 @@ const FLAT_LIST: ViewStyle = {
 export const PlayerListScreen = observer(function PlayerListScreen() {
   const navigation = useNavigation()
   const goBack = () => navigation.goBack()
-
-  const { playerStore } = useStores()
-  const { players } = playerStore
+  
+  const id = '2020-21.NBA.Roster.json'
+  const { rosterStore } = useStores()
+  const players = rosterStore.getPlayersByRosterId(id);
 
   useEffect(() => {
     async function fetchData() {
-      await playerStore.getPlayers()
+      await rosterStore.fetchRosterById(id)
     }
 
     fetchData()

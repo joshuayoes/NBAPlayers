@@ -1,8 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
-/**
- * Rick and Morty Player model.
- */
 export const PlayerModel = types.model("Player").props({
   name: types.maybe(types.string),
   imgURL: types.maybe(types.string),
