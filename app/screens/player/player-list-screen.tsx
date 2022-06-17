@@ -70,7 +70,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
         <FlatList
           contentContainerStyle={FLAT_LIST}
           data={players}
-          keyExtractor={(item) => String(item.name)}
+          keyExtractor={(item, index) => `${item.name ?? 'name'}-${item.imgURL ?? 'imgURL'}-${index}`}
           renderItem={({ item }) => (
             <View style={LIST_CONTAINER}>
               <Image source={{ uri: item.imgURL }} style={IMAGE} />
