@@ -1,5 +1,7 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
+export const NO_TEAM_ID = -1;
+
 /**
  * Model description here for TypeScript hints.
  */

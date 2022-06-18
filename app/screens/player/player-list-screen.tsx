@@ -3,8 +3,9 @@ import { Image, FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-n
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
-import { color, spacing } from "../../theme"
-import { useStores } from "../../models"
+import { color, spacing, typography } from "../../theme"
+import { Team, useStores } from "../../models"
+import { Player } from '../../models'
 
 const FULL: ViewStyle = {
   flex: 1,
@@ -24,21 +25,55 @@ const HEADER_TITLE: TextStyle = {
   lineHeight: 15,
   textAlign: "center",
 }
-const LIST_CONTAINER: ViewStyle = {
+const PLAYER_CONTAINER: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   padding: 10,
+  justifyContent: 'flex-start',
+}
+const TEXT: TextStyle = {
+  color: color.palette.white,
+  fontFamily: typography.primary,
+}
+const PLAYER_TEXT_CONTAINER: ViewStyle = {
+  padding: 10,
+  height: '100%',
+  alignContent: 'space-between',
+  flexWrap: 'wrap',
+  flexDirection: 'column'
+}
+const PLAYER_TEXT: TextStyle = {
+  ...TEXT,
+  color: color.palette.white,
+  paddingBottom: 5,
+}
+const TEAM_TEXT: TextStyle = {
+  ...TEXT,
+  color: color.palette.offWhite,
+  fontSize: 15,
 }
 const IMAGE: ImageStyle = {
   borderRadius: 35,
   height: 65,
   width: 65,
 }
-const LIST_TEXT: TextStyle = {
-  marginLeft: 10,
-}
 const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
+}
+
+const PlayerCard = ({ player, team }: { player: Player, team: Team }) => {
+  const teamName = team?.name ?? 'Unsigned'
+  const playerName = player?.name ?? 'Unknown Player';
+
+  return (
+    <View style={PLAYER_CONTAINER}>
+      <Image source={{ uri: player.imgURL }} style={IMAGE} />
+      <View style={PLAYER_TEXT_CONTAINER}>
+        <Text style={PLAYER_TEXT}>{playerName}</Text>
+        <Text style={TEAM_TEXT}>{teamName}</Text>
+      </View>
+    </View>
+  )
 }
 
 export const PlayerListScreen = observer(function PlayerListScreen() {
@@ -56,7 +91,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
 
     fetchData()
   }, [])
-
+  
   return (
     <View testID="PlayerListScreen" style={FULL}>
       <Wallpaper />
@@ -72,12 +107,10 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
           contentContainerStyle={FLAT_LIST}
           data={players}
           keyExtractor={(item, index) => `${item.name ?? 'name'}-${item.imgURL ?? 'imgURL'}-${index}`}
-          renderItem={({ item }) => (
-            <View style={LIST_CONTAINER}>
-              <Image source={{ uri: item.imgURL }} style={IMAGE} />
-              <Text style={LIST_TEXT}>{item.name}</Text>
-            </View>
-          )}
+          renderItem={(({ item }) => {
+            const team = rosterStore.getTeamByTid(id, item.tid);
+            return <PlayerCard player={item} team={team} />
+          })}
         />
       </Screen>
     </View>

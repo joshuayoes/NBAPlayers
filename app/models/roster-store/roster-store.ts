@@ -3,6 +3,7 @@ import { RosterApi, RosterId } from "../../services/api"
 import { withEnvironment } from "../extensions/with-environment"
 import { Player } from "../player/player"
 import { Roster, RosterModel } from '../roster/roster'
+import { Team } from "../team/team"
 
 
 /**
@@ -36,6 +37,16 @@ export const RosterStoreModel = types
     getPlayersByRosterId: (id: RosterId): Player[] => {
       const roster = self.rosters.get(id)
       return roster?.players ?? []
+    },
+    getTeamsByRosterId: (id: RosterId): Team[] => {
+      const roster = self.rosters.get(id)
+      return roster?.teams ?? []
+    }
+  }))
+  .views((self) => ({
+    getTeamByTid: (id: RosterId, tid: Team['tid']): Team | undefined => {
+      const teams = self.getTeamsByRosterId(id)
+      return teams.find(team => team.tid === tid)
     }
   }))
 
