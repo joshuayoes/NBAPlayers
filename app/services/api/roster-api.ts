@@ -8,7 +8,8 @@ const API_PAGE_SIZE = 50
 const BASE_URL = 'https://raw.githubusercontent.com/alexnoob/BasketBall-GM-Rosters/master'
 
 export const rosterIds = [
-    '2020-21.NBA.Roster.json'
+    '1995-96.NBA.Roster.json',
+    '2020-21.NBA.Roster.json',
 ] as const;
 
 export type RosterId = typeof rosterIds[number]

@@ -1,5 +1,5 @@
 import React from "react"
-import { View, ViewStyle, TextStyle } from "react-native"
+import { View, ViewStyle, TextStyle, FlatList } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Screen, Text, Wallpaper } from "../../components"
@@ -32,6 +32,7 @@ const TITLE: TextStyle = {
 const ROSTER_BUTTON: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
+  marginBottom: spacing[4],
   backgroundColor: "#5D2555",
 }
 const ROSTER_BUTTON_TEXT: TextStyle = {
@@ -48,9 +49,10 @@ const ROSTER_CONTAINER: ViewStyle = {
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation<WelcomeScreenProps['navigation']>()
 
-  const roster: PrimaryParamList['playerList'] = { id: '2020-21.NBA.Roster.json', name: '2020-21 NBA Roster' };
-
-  const nextScreen = () => navigation.navigate("playerList", roster);
+  const rosters: PrimaryParamList['playerList'][] = [
+    { id: '1995-96.NBA.Roster.json', name: '1995-96 NBA Roster' },
+    { id: '2020-21.NBA.Roster.json', name: '2020-21 NBA Roster' },
+  ];
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -60,12 +62,18 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
           <Text style={TITLE} text="NBA Players" />
         </View>
         <View style={ROSTER_CONTAINER}>
-          <Button
-            testID={roster.id}
-            style={ROSTER_BUTTON}
-            textStyle={ROSTER_BUTTON_TEXT}
-            text={roster.name}
-            onPress={nextScreen}
+          <FlatList
+            data={rosters}
+            keyExtractor={(item) => item.id}
+            renderItem={(({ item }) => 
+              <Button
+                testID={item.id}
+                style={ROSTER_BUTTON}
+                textStyle={ROSTER_BUTTON_TEXT}
+                text={item.name}
+                onPress={() => navigation.navigate("playerList", item)} 
+              />
+            )}
           />
         </View>
       </Screen>
