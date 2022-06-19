@@ -5,8 +5,9 @@
  * You'll likely spend most of your time in this file.
  */
 import React from "react"
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator, StackScreenProps } from "@react-navigation/stack"
 import { WelcomeScreen, PlayerListScreen } from "../screens"
+import { RosterId } from "../services/api"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -22,8 +23,14 @@ import { WelcomeScreen, PlayerListScreen } from "../screens"
  */
 export type PrimaryParamList = {
   welcome: undefined
-  playerList: undefined
+  playerList: {
+    id: RosterId
+    name: string
+  }
 }
+
+export type PlayerListScreenProps = StackScreenProps<PrimaryParamList, "playerList">
+export type WelcomeScreenProps = StackScreenProps<PrimaryParamList, "welcome">
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<PrimaryParamList>()
