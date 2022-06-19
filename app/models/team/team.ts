@@ -1,16 +1,14 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
-export const NO_TEAM_ID = -1;
+export const NO_TEAM_ID = -1
 
 /**
  * Model description here for TypeScript hints.
  */
-export const TeamModel = types
-  .model("Team")
-  .props({
-    tid: types.identifierNumber,
-    name: types.string,
-  })
+export const TeamModel = types.model("Team").props({
+  tid: types.identifierNumber,
+  name: types.string,
+})
 
 /**
  * Un-comment the following to omit model attributes from your snapshots (and from async storage).

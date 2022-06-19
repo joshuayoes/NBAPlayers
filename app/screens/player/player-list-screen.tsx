@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { Team, useStores } from "../../models"
-import { Player } from '../../models'
+import { Player } from "../../models"
 import { PlayerListScreenProps } from "../../navigators"
 
 // #region Styles
@@ -31,7 +31,7 @@ const PLAYER_CONTAINER: ViewStyle = {
   alignItems: "center",
   flexDirection: "row",
   padding: 10,
-  justifyContent: 'flex-start',
+  justifyContent: "flex-start",
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
@@ -39,10 +39,10 @@ const TEXT: TextStyle = {
 }
 const PLAYER_TEXT_CONTAINER: ViewStyle = {
   padding: 10,
-  height: '100%',
-  alignContent: 'space-between',
-  flexWrap: 'wrap',
-  flexDirection: 'column'
+  height: "100%",
+  alignContent: "space-between",
+  flexWrap: "wrap",
+  flexDirection: "column",
 }
 const PLAYER_TEXT: TextStyle = {
   ...TEXT,
@@ -65,9 +65,9 @@ const FLAT_LIST: ViewStyle = {
 // #endregion
 
 // #region Components
-const PlayerCard = ({ player, team }: { player: Player, team: Team }) => {
-  const teamName = team?.name ?? 'Unsigned'
-  const playerName = player?.name ?? 'Unknown Player';
+const PlayerCard = ({ player, team }: { player: Player; team: Team }) => {
+  const teamName = team?.name ?? "Unsigned"
+  const playerName = player?.name ?? "Unknown Player"
 
   return (
     <View style={PLAYER_CONTAINER}>
@@ -82,13 +82,15 @@ const PlayerCard = ({ player, team }: { player: Player, team: Team }) => {
 // #endregion
 
 export const PlayerListScreen = observer(function PlayerListScreen() {
-  const navigation = useNavigation<PlayerListScreenProps['navigation']>();
-  const goBack = () => navigation.goBack();
+  const navigation = useNavigation<PlayerListScreenProps["navigation"]>()
+  const goBack = () => navigation.goBack()
 
-  const { params: { id, name } } = useRoute<PlayerListScreenProps['route']>();
-  
+  const {
+    params: { id, name },
+  } = useRoute<PlayerListScreenProps["route"]>()
+
   const { rosterStore } = useStores()
-  const players = rosterStore.getPlayersByRosterId(id);
+  const players = rosterStore.getPlayersByRosterId(id)
 
   useEffect(() => {
     async function fetchData() {
@@ -97,7 +99,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
 
     fetchData()
   }, [])
-  
+
   return (
     <View testID="PlayerListScreen" style={FULL}>
       <Wallpaper />
@@ -112,11 +114,13 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
         <FlatList
           contentContainerStyle={FLAT_LIST}
           data={players}
-          keyExtractor={(item, index) => `${item.name ?? 'name'}-${item.imgURL ?? 'imgURL'}-${index}`}
-          renderItem={(({ item }) => {
-            const team = rosterStore.getTeamByTid(id, item.tid);
+          keyExtractor={(item, index) =>
+            `${item.name ?? "name"}-${item.imgURL ?? "imgURL"}-${index}`
+          }
+          renderItem={({ item }) => {
+            const team = rosterStore.getTeamByTid(id, item.tid)
             return <PlayerCard player={item} team={team} />
-          })}
+          }}
         />
       </Screen>
     </View>

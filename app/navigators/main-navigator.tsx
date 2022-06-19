@@ -24,13 +24,13 @@ import { RosterId } from "../services/api"
 export type PrimaryParamList = {
   welcome: undefined
   playerList: {
-    id: RosterId;
-    name: string;
+    id: RosterId
+    name: string
   }
 }
 
-export type PlayerListScreenProps = StackScreenProps<PrimaryParamList, 'playerList'>;
-export type WelcomeScreenProps = StackScreenProps<PrimaryParamList, 'welcome'>;
+export type PlayerListScreenProps = StackScreenProps<PrimaryParamList, "playerList">
+export type WelcomeScreenProps = StackScreenProps<PrimaryParamList, "welcome">
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createStackNavigator<PrimaryParamList>()

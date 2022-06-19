@@ -2,9 +2,8 @@ import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { RosterApi, RosterId } from "../../services/api"
 import { withEnvironment } from "../extensions/with-environment"
 import { Player } from "../player/player"
-import { Roster, RosterModel } from '../roster/roster'
+import { Roster, RosterModel } from "../roster/roster"
 import { Team } from "../team/team"
-
 
 /**
  * Model description here for TypeScript hints.
@@ -19,7 +18,7 @@ export const RosterStoreModel = types
     setRosterById: (id: RosterId, roster: Roster) => {
       const update = self.rosters.set(id, roster)
       self.rosters.replace(update)
-    }
+    },
   }))
   .actions((self) => ({
     fetchRosterById: async (id: RosterId) => {
@@ -41,13 +40,13 @@ export const RosterStoreModel = types
     getTeamsByRosterId: (id: RosterId): Team[] => {
       const roster = self.rosters.get(id)
       return roster?.teams ?? []
-    }
+    },
   }))
   .views((self) => ({
-    getTeamByTid: (id: RosterId, tid: Team['tid']): Team | undefined => {
+    getTeamByTid: (id: RosterId, tid: Team["tid"]): Team | undefined => {
       const teams = self.getTeamsByRosterId(id)
-      return teams.find(team => team.tid === tid)
-    }
+      return teams.find((team) => team.tid === tid)
+    },
   }))
 
 /**

@@ -5,12 +5,9 @@ import { Roster } from "../../models"
 
 const API_PAGE_SIZE = 50
 
-const BASE_URL = 'https://raw.githubusercontent.com/alexnoob/BasketBall-GM-Rosters/master'
+const BASE_URL = "https://raw.githubusercontent.com/alexnoob/BasketBall-GM-Rosters/master"
 
-export const rosterIds = [
-    '1995-96.NBA.Roster.json',
-    '2020-21.NBA.Roster.json',
-] as const;
+export const rosterIds = ["1995-96.NBA.Roster.json", "2020-21.NBA.Roster.json"] as const
 
 export type RosterId = typeof rosterIds[number]
 
@@ -24,10 +21,9 @@ export class RosterApi {
   async getRoster(id: RosterId): Promise<ApiResult<Roster>> {
     try {
       // make the api call
-      const response: ApiResponse<any> = await this.api.apisauce.get(
-        `${BASE_URL}/${id}`,
-        { amount: API_PAGE_SIZE },
-      )
+      const response: ApiResponse<any> = await this.api.apisauce.get(`${BASE_URL}/${id}`, {
+        amount: API_PAGE_SIZE,
+      })
 
       // the typical ways to die when calling an api
       if (!response.ok) {
@@ -35,8 +31,8 @@ export class RosterApi {
         if (problem) return problem
       }
 
-      const data: Roster = { 
-        id, 
+      const data: Roster = {
+        id,
         startingSeason: response.data.startingSeason,
         players: response.data.players,
         teams: response.data.teams,

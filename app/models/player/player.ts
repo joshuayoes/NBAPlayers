@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { NO_TEAM_ID } from '../team/team'
+import { NO_TEAM_ID } from "../team/team"
 
 export const PlayerModel = types.model("Player").props({
   name: types.maybe(types.string),

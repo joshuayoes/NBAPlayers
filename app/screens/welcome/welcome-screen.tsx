@@ -11,7 +11,7 @@ const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
   backgroundColor: color.transparent,
   padding: spacing[4],
-  justifyContent: 'center',
+  justifyContent: "center",
 }
 const TEXT: TextStyle = {
   color: color.palette.white,
@@ -42,17 +42,17 @@ const ROSTER_BUTTON_TEXT: TextStyle = {
   letterSpacing: 2,
 }
 const ROSTER_CONTAINER: ViewStyle = {
-  marginVertical: spacing[4]
+  marginVertical: spacing[4],
 }
 // #endregion
 
 export const WelcomeScreen = observer(function WelcomeScreen() {
-  const navigation = useNavigation<WelcomeScreenProps['navigation']>()
+  const navigation = useNavigation<WelcomeScreenProps["navigation"]>()
 
-  const rosters: PrimaryParamList['playerList'][] = [
-    { id: '1995-96.NBA.Roster.json', name: '1995-96 NBA Roster' },
-    { id: '2020-21.NBA.Roster.json', name: '2020-21 NBA Roster' },
-  ];
+  const rosters: PrimaryParamList["playerList"][] = [
+    { id: "1995-96.NBA.Roster.json", name: "1995-96 NBA Roster" },
+    { id: "2020-21.NBA.Roster.json", name: "2020-21 NBA Roster" },
+  ]
 
   return (
     <View testID="WelcomeScreen" style={FULL}>
@@ -65,13 +65,13 @@ export const WelcomeScreen = observer(function WelcomeScreen() {
           <FlatList
             data={rosters}
             keyExtractor={(item) => item.id}
-            renderItem={(({ item }) => 
+            renderItem={({ item }) => (
               <Button
                 testID={item.id}
                 style={ROSTER_BUTTON}
                 textStyle={ROSTER_BUTTON_TEXT}
                 text={item.name}
-                onPress={() => navigation.navigate("playerList", item)} 
+                onPress={() => navigation.navigate("playerList", item)}
               />
             )}
           />
