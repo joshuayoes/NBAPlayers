@@ -1,12 +1,14 @@
 import React, { useEffect } from "react"
 import { Image, FlatList, TextStyle, View, ViewStyle, ImageStyle } from "react-native"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { Team, useStores } from "../../models"
 import { Player } from '../../models'
+import { PlayerListScreenProps } from "../../navigators"
 
+// #region Styles
 const FULL: ViewStyle = {
   flex: 1,
 }
@@ -60,7 +62,9 @@ const IMAGE: ImageStyle = {
 const FLAT_LIST: ViewStyle = {
   paddingHorizontal: spacing[4],
 }
+// #endregion
 
+// #region Components
 const PlayerCard = ({ player, team }: { player: Player, team: Team }) => {
   const teamName = team?.name ?? 'Unsigned'
   const playerName = player?.name ?? 'Unknown Player';
@@ -75,12 +79,14 @@ const PlayerCard = ({ player, team }: { player: Player, team: Team }) => {
     </View>
   )
 }
+// #endregion
 
 export const PlayerListScreen = observer(function PlayerListScreen() {
-  const navigation = useNavigation()
-  const goBack = () => navigation.goBack()
+  const navigation = useNavigation<PlayerListScreenProps['navigation']>();
+  const goBack = () => navigation.goBack();
+
+  const { params: { id, name } } = useRoute<PlayerListScreenProps['route']>();
   
-  const id = '2020-21.NBA.Roster.json'
   const { rosterStore } = useStores()
   const players = rosterStore.getPlayersByRosterId(id);
 
@@ -97,7 +103,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
       <Wallpaper />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerText="2020-21 NBA Roster"
+          headerText={name}
           leftIcon="back"
           onLeftPress={goBack}
           style={HEADER}
