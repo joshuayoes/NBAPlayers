@@ -65,7 +65,7 @@ const FLAT_LIST: ViewStyle = {
 // #endregion
 
 // #region Components
-const PlayerIcon = ({ player }: { player: Player }) => {
+const PlayerIcon = observer(function PlayerIcon({ player }: { player: Player }) {
   const backupUri =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAeGVYSWZNTQAqAAAACAAEARoABQAAAAEAAAA+ARsABQAAAAEAAABGASgAAwAAAAEAAgAAh2kABAAAAAEAAABOAAAAAAAAAEgAAAABAAAASAAAAAEAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAGKADAAQAAAABAAAAGAAAAADRukGaAAAACXBIWXMAAAsTAAALEwEAmpwYAAACC0lEQVRIDcWU4XHiMBCFceb+xyW4BF8FOBXcdUBSAVwFdgfQAaQCSAVKKiAdyB2Eq4B8z0hGFjLH/cjkzbzZ1du3K0v2eDL5YmT/mn88Hks8U6hYQOEAX+FLlmUt8f/B4Aoa6GFJjOOe6GFItPntoGHpui2xgXncjVbAR2ihUMee5BrjWm6wgheDU0349BDCOlXvNQy1XKDpRZegzeEWGjhL1P0my7jWrWkqodDEBjR/54p9nvDp1EIV1yaIBtq4gKZ7Fha+prxTAk01tBxaaLy3iwgFFFJHN+j7QcNpmE6yS+gNulCqducMv118czEMh3AR5ffRWsuV0yoXu6Nt2fHiKWVAv7gOtDkULk7seiy1dbiBQRjeW1/tNulfLL4+DyyDVLP8PH9FA0O84HfwE+0J6rpauHAa6Q1gtw20N1hvsjBLp9zJ/MN1vBNniDlPpqccQDqCWLiCPO2IV54SPsMTGFBCoQk0fbo1tHAMetIVLIK+R2futCwo6CVrZ933HC6g8Ap38C9soZBDeaewgsIG/oH6GnW6B+IZ7Fq5nX1oSDToKvDopDqF8HEKI79vit64vTo1UaR36YY3ifJZwrRxxvqsjmd4c+iHb8adQYUGXY9g4QwWQblL0TS4hv5aVrHn6prGEhrosScxjpboYUiqsWH9VzRmoLmg9gtW0L/0lvwdvvG1KH4fPgH9CH0Q0G8VrAAAAABJRU5ErkJggg=="
 
@@ -77,9 +77,9 @@ const PlayerIcon = ({ player }: { player: Player }) => {
       accessibilityLabel={player.name}
     />
   )
-}
+})
 
-const PlayerCard = ({ player, team }: { player: Player; team: Team }) => {
+const PlayerCard = observer(function PlayerCard({ player, team }: { player: Player; team: Team }) {
   const teamName = team?.name ?? "Unsigned"
   const playerName = player?.name ?? "Unknown Player"
 
@@ -92,7 +92,7 @@ const PlayerCard = ({ player, team }: { player: Player; team: Team }) => {
       </View>
     </View>
   )
-}
+})
 // #endregion
 
 export const PlayerListScreen = observer(function PlayerListScreen() {
@@ -128,9 +128,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
         <FlatList
           contentContainerStyle={FLAT_LIST}
           data={players}
-          keyExtractor={(item, index) =>
-            `${item.name ?? "name"}-${item.imgURL ?? "imgURL"}-${index}`
-          }
+          keyExtractor={(item) => item.id + item.name}
           renderItem={({ item }) => {
             const team = rosterStore.getTeamByTid(id, item.tid)
             return <PlayerCard player={item} team={team} />
