@@ -4,8 +4,8 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
-import { Team, useStores } from "../../models"
-import { Player } from "../../models"
+import { Team, useStores, Player } from "../../models"
+
 import { PlayerListScreenProps } from "../../navigators"
 
 // #region Styles
