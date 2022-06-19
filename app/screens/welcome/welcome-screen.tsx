@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite"
 import { Button, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { PrimaryParamList, WelcomeScreenProps } from "../../navigators"
+import { rosterEntries } from "../../services/api"
 
 // #region Styles
 const FULL: ViewStyle = { flex: 1 }
@@ -49,10 +50,7 @@ const ROSTER_CONTAINER: ViewStyle = {
 export const WelcomeScreen = observer(function WelcomeScreen() {
   const navigation = useNavigation<WelcomeScreenProps["navigation"]>()
 
-  const rosters: PrimaryParamList["playerList"][] = [
-    { id: "1995-96.NBA.Roster.json", name: "1995-96 NBA Roster" },
-    { id: "2020-21.NBA.Roster.json", name: "2020-21 NBA Roster" },
-  ]
+  const rosters: PrimaryParamList["playerList"][] = rosterEntries
 
   return (
     <View testID="WelcomeScreen" style={FULL}>

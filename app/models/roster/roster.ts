@@ -4,7 +4,6 @@ import { TeamModel } from "../team/team"
 
 export const RosterModel = types.model("Roster").props({
   id: types.identifier,
-  startingSeason: types.number,
   players: types.array(PlayerModel),
   teams: types.array(TeamModel),
 })
