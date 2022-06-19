@@ -97,7 +97,7 @@ export const PlayerListScreen = observer(function PlayerListScreen() {
       <Wallpaper />
       <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
         <Header
-          headerTx="playerListScreen.title"
+          headerText="2020-21 NBA Roster"
           leftIcon="back"
           onLeftPress={goBack}
           style={HEADER}
